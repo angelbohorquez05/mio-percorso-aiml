@@ -322,7 +322,7 @@ const GRADE_OPTS=[
   {value:"28",label:"28",cls:"g-great",tip:""},
   {value:"29",label:"29",cls:"g-great",tip:""},
   {value:"30",label:"30",cls:"g-max",tip:"Massimo"},
-  {value:"30L",label:"30 e Lode 🏆",cls:"g-honors",tip:"Con lode"},
+  {value:"30L",label:"30 e Lode ",cls:"g-honors",tip:"Con lode"},
 ];
 
 let data={}, currentFilter="all";
@@ -343,7 +343,7 @@ function exportData(){
   const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(b);a.download="mio-percorso-aiml.json";a.click();
-  showToast("✅ File esportato con successo!");
+  showToast(" File esportato con successo!");
 }
 function importData(){document.getElementById("importInput").click();}
 function handleImport(e){
@@ -353,8 +353,8 @@ function handleImport(e){
     try{
       const imp=JSON.parse(ev.target.result);
       COURSES.forEach(c=>{if(imp[c.id])data[c.id]={...def(),...imp[c.id]};});
-      saveLocal();render();showToast("✅ Dati importati con successo!");
-    }catch(_){showToast("❌ File non valido");}
+      saveLocal();render();showToast(" Dati importati con successo!");
+    }catch(_){showToast(" File non valido");}
   };
   r.readAsText(f);e.target.value="";
 }
@@ -409,7 +409,7 @@ function saveCard(id){
   const btn=document.getElementById("savebtn_"+id);
   btn.textContent="✓ Salvato!";btn.classList.add("saved");
   setTimeout(()=>{
-    btn.textContent="💾 Salva le modifiche";btn.classList.remove("saved");
+    btn.textContent=" Salva le modifiche";btn.classList.remove("saved");
     toggleCard(id);
   },1000);
 }
@@ -437,7 +437,7 @@ function toggleCard(id){
 function headerHTML(c,d,isOpen){
   const st=STATUS_STYLE[d.status]||STATUS_STYLE.non_iniziato;
   const cat=CAT_STYLE[c.cat];
-  const gs=d.grade==="30L"?"30L 🏆":d.grade;
+  const gs=d.grade==="30L"?"30L ":d.grade;
   return `
     <div class="card-status-icon ${st.cls}">${st.icon}</div>
     <div class="card-meta">
