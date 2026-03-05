@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Mio Percorso · AI & ML Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bluebell:   #3e92cc;
+    --baltic:     #2a628f;
+    --space1:     #13293d;
+    --space2:     #16324f;
+    --yale:       #18435a;
+    --bg:         #eef4f9;
+    --surface:    #ffffff;
+    --border:     #cfe0ee;
+    --text:       #0f1e2a;
+    --muted:      #6b8a9e;
+    --radius:     14px;
+    --shadow:     0 2px 12px rgba(19,41,61,0.08);
+    --shadow-md:  0 6px 28px rgba(19,41,61,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--space1) 0%, var(--space2) 55%, var(--yale) 100%);
+    padding: 36px 28px 38px; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-90px; right:-70px;
+    width:320px; height:320px; border-radius:50%; background:rgba(62,146,204,0.10);
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-50px; left:20%;
+    width:180px; height:180px; border-radius:50%; background:rgba(62,146,204,0.06);
+  }
+  .hero-inner { max-width:860px; margin:0 auto; position:relative; }
+  .hero-top {
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:16px; flex-wrap:wrap; margin-bottom:28px;
+  }
+  .hero-title {
+    font-family:'Fraunces',serif; font-size:clamp(30px,6vw,46px);
+    font-weight:900; color:#fff; line-height:1.0; margin-bottom:6px;
+  }
+  .hero-subtitle { font-size:14px; color:rgba(255,255,255,0.5); font-style:italic; }
+  .hero-meta { display:flex; flex-direction:column; align-items:flex-end; gap:5px; padding-top:4px; }
+  .hero-meta-tag {
+    font-size:11px; font-weight:600; letter-spacing:0.13em; text-transform:uppercase;
+    color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.08);
+    padding:5px 13px; border-radius:99px; border:1px solid rgba(255,255,255,0.12); white-space:nowrap;
+  }
+  .progress-hero {
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.10);
+    border-radius:14px; padding:20px 24px;
+  }
+  .progress-label-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; }
+  .progress-label { font-size:13px; color:rgba(255,255,255,0.55); font-weight:500; }
+  .progress-pct { font-family:'Fraunces',serif; font-size:44px; font-weight:900; color:#fff; line-height:1; }
+  .progress-track { height:11px; background:rgba(255,255,255,0.10); border-radius:99px; overflow:hidden; }
+  .progress-fill {
+    height:100%; border-radius:99px;
+    background:linear-gradient(90deg,var(--bluebell),#8ecae6);
+    transition:width 0.9s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 0 14px rgba(62,146,204,0.55);
+  }
+  .progress-sub { margin-top:9px; font-size:12px; color:rgba(255,255,255,0.32); }
+
+  .main { max-width:860px; margin:0 auto; padding:22px 24px 64px; }
+
+  .mini-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:22px; }
+  .mini-stat {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:14px 16px; text-align:center; box-shadow:var(--shadow);
+  }
+  .mini-stat-num { font-size:24px; font-weight:800; margin-bottom:3px; }
+  .mini-stat-label { font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+
+  .toolbar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px; justify-content:space-between; }
+  .filters { display:flex; gap:6px; flex-wrap:wrap; }
+  .filter-pill {
+    padding:7px 14px; border-radius:99px; font-size:12px; font-weight:600;
+    border:1.5px solid var(--border); background:var(--surface);
+    color:var(--muted); cursor:pointer; font-family:inherit; transition:all 0.15s;
+  }
+  .filter-pill:hover { border-color:var(--bluebell); color:var(--baltic); }
+  .filter-pill.active { background:var(--space2); color:#fff; border-color:var(--space2); }
+  .io-btns { display:flex; gap:6px; }
+  .btn-io {
+    padding:7px 14px; border-radius:99px; font-size:12px; font-weight:600;
+    border:1.5px solid var(--border); background:var(--surface);
+    color:var(--muted); cursor:pointer; font-family:inherit;
+    transition:all 0.15s; display:flex; align-items:center; gap:5px;
+  }
+  .btn-io:hover { border-color:var(--baltic); color:var(--space2); }
+  .btn-io.export { background:var(--bluebell); color:#fff; border-color:var(--bluebell); }
+  .btn-io.export:hover { background:var(--baltic); border-color:var(--baltic); }
+
+  .courses { display:flex; flex-direction:column; gap:8px; }
+  .course-card {
+    background:var(--surface); border:1.5px solid var(--border);
+    border-radius:var(--radius); overflow:hidden;
+    transition:box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .course-card:hover { box-shadow:var(--shadow-md); transform:translateY(-1px); }
+  .course-card.open { border-color:var(--bluebell); box-shadow:var(--shadow-md); }
+  .card-header { display:flex; align-items:center; gap:12px; padding:14px 18px; cursor:pointer; user-select:none; }
+  .card-status-icon {
+    width:38px; height:38px; border-radius:10px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700;
+  }
+  .card-meta { flex:1; min-width:0; }
+  .card-badges { display:flex; align-items:center; gap:6px; margin-bottom:3px; flex-wrap:wrap; }
+  .badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:99px; letter-spacing:0.04em; }
+  .card-name { font-size:14px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .hours-pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:99px; background:#dbeafe; color:var(--baltic); }
+  .grade-pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:99px; background:#cce7f5; color:var(--space2); }
+  .status-badge { font-size:11px; font-weight:600; padding:4px 11px; border-radius:99px; }
+  .chevron { color:#b0c8d8; font-size:10px; transition:transform 0.22s; flex-shrink:0; }
+  .chevron.open { transform:rotate(180deg); }
+
+  .card-panel { border-top:1px solid #e3edf5; background:#f5f9fc; padding:20px 20px 22px; display:none; }
+  .card-panel.open { display:block; }
+  .panel-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field-group { display:flex; flex-direction:column; gap:6px; }
+  .field-group.full { grid-column:1/-1; }
+  label { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; }
+  input[type="number"],select,textarea {
+    width:100%; padding:10px 12px; border-radius:10px; font-size:13px;
+    font-family:inherit; font-weight:500; background:#fff; color:var(--text);
+    border:1.5px solid var(--border); outline:none; transition:border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus,select:focus,textarea:focus { border-color:var(--bluebell); box-shadow:0 0 0 3px rgba(62,146,204,0.12); }
+  textarea { resize:vertical; line-height:1.65; }
+  select { cursor:pointer; appearance:none; }
+
+  .grade-options { display:flex; gap:6px; flex-wrap:wrap; }
+  .grade-opt {
+    padding:7px 12px; border-radius:10px; font-size:12px; font-weight:600;
+    border:1.5px solid var(--border); background:#fff; color:var(--muted);
+    cursor:pointer; font-family:inherit; transition:all 0.15s;
+  }
+  .grade-opt:hover { border-color:var(--bluebell); color:var(--baltic); }
+  .g-pass   { background:#dbeafe; color:#1e40af; border-color:#93c5fd; }
+  .g-good   { background:#e0f0fa; color:var(--baltic); border-color:var(--bluebell); }
+  .g-great  { background:#cce7f5; color:var(--space2); border-color:var(--baltic); }
+  .g-max    { background:#b8d9ee; color:var(--space1); border-color:var(--yale); }
+  .g-honors { background:var(--space2); color:#fff; border-color:var(--space1); }
+
+  .st-todo  { background:#eef4f9; color:#6b8a9e; }
+  .st-doing { background:#dbeafe; color:var(--baltic); }
+  .st-done  { background:#cce7f5; color:var(--space2); }
+  .cat-ml   { background:#e0eaf8; color:#1e3a6e; }
+  .cat-tec  { background:#d6ecf7; color:var(--yale); }
+  .cat-trv  { background:#e8f0f8; color:var(--baltic); }
+
+  .save-btn {
+    margin-top:18px; width:100%; padding:13px; border-radius:12px;
+    font-size:14px; font-weight:700; background:var(--space2); color:#fff;
+    border:none; cursor:pointer; font-family:inherit;
+    transition:background 0.2s, transform 0.1s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .save-btn:hover { background:var(--space1); }
+  .save-btn:active { transform:scale(0.99); }
+  .save-btn.saved { background:var(--bluebell); }
+
+  .toast {
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+    background:var(--space1); color:#fff; padding:12px 26px; border-radius:99px;
+    font-size:13px; font-weight:600; box-shadow:var(--shadow-md);
+    transition:transform 0.3s cubic-bezier(.4,0,.2,1); z-index:999; white-space:nowrap;
+    border:1px solid rgba(62,146,204,0.3);
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+  #importInput { display:none; }
+
+  @media(max-width:540px){
+    .panel-grid{grid-template-columns:1fr;}
+    .field-group.full{grid-column:1;}
+    .hero-meta{align-items:flex-start;}
+    .progress-pct{font-size:36px;}
+    .card-name{white-space:normal;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <div class="hero-title">Il mio percorso</div>
+        <div class="hero-subtitle">AI &amp; Machine Learning Specialist</div>
+      </div>
+      <div class="hero-meta">
+        <span class="hero-meta-tag">🇮🇹 Milano</span>
+        <span class="hero-meta-tag">Italiano</span>
+        <span class="hero-meta-tag">1 160 ore totali</span>
+      </div>
+    </div>
+    <div class="progress-hero">
+      <div class="progress-label-row">
+        <span class="progress-label">Avanzamento del corso</span>
+        <span class="progress-pct" id="pctNum">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-sub" id="progressSub">0 moduli completati su 29</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- AVERAGE BANNER -->
+  <div id="avgBanner" style="background:var(--space2);border-radius:14px;padding:18px 24px;margin-bottom:14px;box-shadow:var(--shadow-md);display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Media ponderata dei voti</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.55);">calcolata sui moduli completati con voto</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-family:'Fraunces',serif;font-size:34px;font-weight:900;color:#fff;line-height:1;" id="avgNum">—</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;" id="avgSub">nessun voto ancora</div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="mini-stat">
+      <div class="mini-stat-num" id="statDone" style="color:var(--space2)">0</div>
+      <div class="mini-stat-label">Completati</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num" id="statProgress" style="color:var(--bluebell)">0</div>
+      <div class="mini-stat-label">In corso</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num" id="statTodo" style="color:var(--muted)">29</div>
+      <div class="mini-stat-label">Da iniziare</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters">
+      <button class="filter-pill active" onclick="setFilter('all',this)">Tutti</button>
+      <button class="filter-pill" onclick="setFilter('in_corso',this)">In corso</button>
+      <button class="filter-pill" onclick="setFilter('non_iniziato',this)">Da iniziare</button>
+      <button class="filter-pill" onclick="setFilter('completato',this)">Completati</button>
+      <button class="filter-pill" onclick="setFilter('ml',this)">AI / ML</button>
+      <button class="filter-pill" onclick="setFilter('tecnico',this)">Tecnico</button>
+      <button class="filter-pill" onclick="setFilter('transversal',this)">Trasversale</button>
+    </div>
+    <div class="io-btns">
+      <button class="btn-io" onclick="importData()">⬆ Importa</button>
+      <button class="btn-io export" onclick="exportData()">⬇ Esporta</button>
+    </div>
+  </div>
+
+  <div class="courses" id="courseList"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="importInput" accept=".json" onchange="handleImport(event)">
+
+<script>
+const COURSES=[
+  {id:"UFS01",name:"Fondamenti di Algoritmi e Programmazione",cat:"tecnico"},
+  {id:"UFS02",name:"Python Programming",cat:"tecnico"},
+  {id:"UFS03",name:"DataBase SQL",cat:"tecnico"},
+  {id:"UFS04",name:"Matematica e Algebra Lineare",cat:"tecnico"},
+  {id:"UFS05",name:"Fondamenti di Probabilità e Statistica",cat:"tecnico"},
+  {id:"UFS06",name:"Modelli Statistici",cat:"tecnico"},
+  {id:"UFS07",name:"Statistical Programming with R",cat:"tecnico"},
+  {id:"UFS08",name:"Machine Learning Supervised",cat:"ml"},
+  {id:"UFS09",name:"Machine Learning Unsupervised",cat:"ml"},
+  {id:"UFS10",name:"Introduzione all'AI ed Etica nell'Intelligenza Artificiale",cat:"ml"},
+  {id:"UFS11",name:"DataBase NoSQL",cat:"tecnico"},
+  {id:"UFS12",name:"Deep Learning e Reti Neurali",cat:"ml"},
+  {id:"UFS13",name:"ML & Deep Learning per Vision & Multimedia",cat:"ml"},
+  {id:"UFS14",name:"Sviluppo Software & DevOps-Agile",cat:"tecnico"},
+  {id:"UFS15",name:"Machine Learning — Modelli Avanzati",cat:"ml"},
+  {id:"UFS16",name:"Data Visualization — Fondamenti",cat:"tecnico"},
+  {id:"UFS17",name:"Data Visualization — Avanzato",cat:"tecnico"},
+  {id:"UFS18",name:"AIoT",cat:"ml"},
+  {id:"UFT01",name:"Efficacia personale e stile comportamentale",cat:"transversal"},
+  {id:"UFT02",name:"Privacy, blockchain e intelligenza artificiale",cat:"transversal"},
+  {id:"UFT03",name:"Diritto, GDPR e diritto digitale",cat:"transversal"},
+  {id:"UFT04",name:"Economia e organizzazione aziendale",cat:"transversal"},
+  {id:"UFT05",name:"Qualità, salute e sicurezza sul lavoro",cat:"transversal"},
+  {id:"UFT06",name:"Project Management & Agile",cat:"transversal"},
+  {id:"UFT07",name:"Inglese e microlingua di settore",cat:"transversal"},
+  {id:"UFT08",name:"Problem Solving & Design Thinking",cat:"transversal"},
+  {id:"UFT09",name:"Comunicazione e lavoro di gruppo",cat:"transversal"},
+  {id:"UFT10",name:"Personal Branding & orientamento al lavoro",cat:"transversal"},
+  {id:"UFT11",name:"Team Working",cat:"transversal"},
+];
+
+const CAT_STYLE={
+  tecnico:    {label:"Tecnico",     cls:"cat-tec"},
+  ml:         {label:"AI / ML",    cls:"cat-ml"},
+  transversal:{label:"Trasversale",cls:"cat-trv"},
+};
+const STATUS_STYLE={
+  non_iniziato:{label:"Da iniziare",cls:"st-todo", icon:"○"},
+  in_corso:    {label:"In corso",   cls:"st-doing",icon:"◐"},
+  completato:  {label:"Completato", cls:"st-done", icon:"✓"},
+};
+const GRADE_OPTS=[
+  {value:"18",label:"18",cls:"g-pass",tip:"Appena sufficiente"},
+  {value:"19",label:"19",cls:"g-pass",tip:""},
+  {value:"20",label:"20",cls:"g-pass",tip:""},
+  {value:"21",label:"21",cls:"g-pass",tip:""},
+  {value:"22",label:"22",cls:"g-good",tip:"Buono"},
+  {value:"23",label:"23",cls:"g-good",tip:""},
+  {value:"24",label:"24",cls:"g-good",tip:""},
+  {value:"25",label:"25",cls:"g-good",tip:""},
+  {value:"26",label:"26",cls:"g-good",tip:""},
+  {value:"27",label:"27",cls:"g-great",tip:"Molto buono"},
+  {value:"28",label:"28",cls:"g-great",tip:""},
+  {value:"29",label:"29",cls:"g-great",tip:""},
+  {value:"30",label:"30",cls:"g-max",tip:"Massimo"},
+  {value:"30L",label:"30 e Lode 🏆",cls:"g-honors",tip:"Con lode"},
+];
+
+let data={}, currentFilter="all";
+const def=()=>({status:"non_iniziato",hours:"",notes:"",grade:""});
+
+function loadData(){
+  try{const r=localStorage.getItem("miopercorso_v3");if(r)data=JSON.parse(r);}catch(_){}
+  COURSES.forEach(c=>{if(!data[c.id])data[c.id]=def();});
+}
+function saveLocal(){localStorage.setItem("miopercorso_v3",JSON.stringify(data));}
+
+function showToast(msg,ms=2200){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),ms);
+}
+function exportData(){
+  const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(b);a.download="mio-percorso-aiml.json";a.click();
+  showToast("✅ File esportato con successo!");
+}
+function importData(){document.getElementById("importInput").click();}
+function handleImport(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const imp=JSON.parse(ev.target.result);
+      COURSES.forEach(c=>{if(imp[c.id])data[c.id]={...def(),...imp[c.id]};});
+      saveLocal();render();showToast("✅ Dati importati con successo!");
+    }catch(_){showToast("❌ File non valido");}
+  };
+  r.readAsText(f);e.target.value="";
+}
+
+function gradeToNum(g){
+  if(!g)return null;
+  if(g==="30L")return 30;
+  const n=parseInt(g);
+  return isNaN(n)?null:n;
+}
+
+function updateStats(){
+  const done=COURSES.filter(c=>data[c.id]?.status==="completato").length;
+  const prog=COURSES.filter(c=>data[c.id]?.status==="in_corso").length;
+  const todo=COURSES.length-done-prog;
+  const pct=Math.round(done/COURSES.length*100);
+  document.getElementById("pctNum").textContent=pct+"%";
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("progressSub").textContent=`${done} moduli completati su ${COURSES.length}`;
+  document.getElementById("statDone").textContent=done;
+  document.getElementById("statProgress").textContent=prog;
+  document.getElementById("statTodo").textContent=todo;
+
+  // weighted average — only completed courses with a grade
+  const graded=COURSES.filter(c=>data[c.id]?.status==="completato"&&gradeToNum(data[c.id]?.grade)!==null);
+  const banner=document.getElementById("avgBanner");
+  if(graded.length===0){
+    banner.style.display="none";
+  } else {
+    const sum=graded.reduce((a,c)=>a+gradeToNum(data[c.id].grade),0);
+    const avg=(sum/graded.length).toFixed(2);
+    document.getElementById("avgNum").textContent=avg;
+    const lode=graded.filter(c=>data[c.id].grade==="30L").length;
+    document.getElementById("avgSub").textContent=`su ${graded.length} moduli con voto${lode>0?" · "+lode+" con lode 🏆":""}`;
+    banner.style.display="flex";
+  }
+}
+
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll(".filter-pill").forEach(b=>b.classList.remove("active"));
+  el.classList.add("active");render();
+}
+
+function saveCard(id){
+  const st=document.getElementById("status_"+id).value;
+  const hrs=document.getElementById("hours_"+id).value;
+  const nt=document.getElementById("notes_"+id).value;
+  const gr=data[id].grade||"";
+  data[id]={status:st,hours:hrs,notes:nt,grade:gr};
+  saveLocal();updateStats();refreshHeader(id);
+  const btn=document.getElementById("savebtn_"+id);
+  btn.textContent="✓ Salvato!";btn.classList.add("saved");
+  setTimeout(()=>{
+    btn.textContent="💾 Salva le modifiche";btn.classList.remove("saved");
+    toggleCard(id);
+  },1000);
+}
+
+function setGrade(id,val){
+  // clicking same grade deselects it
+  const current=data[id].grade||"";
+  const newGrade=current===val?"":val;
+  data[id]={...data[id],grade:newGrade};
+  document.querySelectorAll(".gopt_"+id).forEach(b=>{
+    b.className="grade-opt gopt_"+id;
+    if(newGrade&&b.dataset.val===newGrade){const o=GRADE_OPTS.find(x=>x.value===newGrade);if(o)b.classList.add(o.cls);}
+  });
+}
+
+function toggleCard(id){
+  const panel=document.getElementById("panel_"+id);
+  const card=document.getElementById("card_"+id);
+  const isOpen=panel.classList.contains("open");
+  panel.classList.toggle("open",!isOpen);
+  card.classList.toggle("open",!isOpen);
+  refreshHeader(id);
+}
+
+function headerHTML(c,d,isOpen){
+  const st=STATUS_STYLE[d.status]||STATUS_STYLE.non_iniziato;
+  const cat=CAT_STYLE[c.cat];
+  const gs=d.grade==="30L"?"30L 🏆":d.grade;
+  return `
+    <div class="card-status-icon ${st.cls}">${st.icon}</div>
+    <div class="card-meta">
+      <div class="card-badges">
+        <span class="badge ${cat.cls}">${c.id}</span>
+        <span class="badge ${cat.cls}" style="opacity:.7">${cat.label}</span>
+      </div>
+      <div class="card-name">${c.name}</div>
+    </div>
+    <div class="card-right">
+      ${d.grade?`<span class="grade-pill">${gs}</span>`:""}
+      ${d.hours?`<span class="hours-pill">${d.hours}h</span>`:""}
+      <span class="status-badge ${st.cls}">${st.label}</span>
+      <span class="chevron${isOpen?" open":""}">▼</span>
+    </div>`;
+}
+
+function refreshHeader(id){
+  const c=COURSES.find(x=>x.id===id);
+  const d=data[id]||def();
+  const card=document.getElementById("card_"+id);
+  const isOpen=card.classList.contains("open");
+  const hdr=card.querySelector(".card-header");
+  hdr.innerHTML=headerHTML(c,d,isOpen);
+  hdr.onclick=()=>toggleCard(id);
+}
+
+function gradeOptsHTML(id,sel){
+  return GRADE_OPTS.map(o=>`<button class="grade-opt gopt_${id}${sel===o.value?" "+o.cls:""}"
+    data-val="${o.value}" onclick="setGrade('${id}','${o.value}')" title="${o.tip}">${o.label}</button>`).join("");
+}
+
+function buildCard(c){
+  const d=data[c.id]||def();
+  return `
+  <div class="course-card" id="card_${c.id}">
+    <div class="card-header" onclick="toggleCard('${c.id}')">${headerHTML(c,d,false)}</div>
+    <div class="card-panel" id="panel_${c.id}">
+      <div class="panel-grid">
+        <div class="field-group">
+          <label>Stato del modulo</label>
+          <select id="status_${c.id}">
+            <option value="non_iniziato"${d.status==="non_iniziato"?" selected":""}>○  Da iniziare</option>
+            <option value="in_corso"${d.status==="in_corso"?" selected":""}>◐  In corso</option>
+            <option value="completato"${d.status==="completato"?" selected":""}>✓  Completato</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Ore dedicate</label>
+          <input type="number" id="hours_${c.id}" min="0" step="0.5" placeholder="es. 12" value="${d.hours||""}">
+        </div>
+        <div class="field-group full">
+          <label>Voto finale — scala 18–30, oppure 30 e lode</label>
+          <div class="grade-options">${gradeOptsHTML(c.id,d.grade)}</div>
+        </div>
+        <div class="field-group full">
+          <label>I tuoi appunti e note personali</label>
+          <textarea id="notes_${c.id}" rows="4" placeholder="Concetti chiave, dubbi, risorse utili…">${d.notes||""}</textarea>
+        </div>
+      </div>
+      <button class="save-btn" id="savebtn_${c.id}" onclick="saveCard('${c.id}')">💾 Salva le modifiche</button>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const f=COURSES.filter(c=>{
+    if(currentFilter==="all")return true;
+    if(["ml","tecnico","transversal"].includes(currentFilter))return c.cat===currentFilter;
+    return data[c.id]?.status===currentFilter;
+  });
+  document.getElementById("courseList").innerHTML=f.map(buildCard).join("");
+  updateStats();
+}
+
+loadData();render();
+</script>
+</body>
+</html>
