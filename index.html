@@ -197,7 +197,7 @@
         <div class="hero-subtitle">AI &amp; Machine Learning Specialist</div>
       </div>
       <div class="hero-meta">
-        <span class="hero-meta-tag">🇮🇹 Milano</span>
+        <span class="hero-meta-tag">Milano</span>
         <span class="hero-meta-tag">Italiano</span>
         <span class="hero-meta-tag">1 160 ore totali</span>
       </div>
@@ -220,7 +220,6 @@
   <div id="avgBanner" style="background:var(--space2);border-radius:14px;padding:18px 24px;margin-bottom:14px;box-shadow:var(--shadow-md);display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
     <div>
       <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Media ponderata dei voti</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.55);">calcolata sui moduli completati con voto</div>
     </div>
     <div style="text-align:right;">
       <div style="font-family:'Fraunces',serif;font-size:34px;font-weight:900;color:#fff;line-height:1;" id="avgNum">—</div>
@@ -388,7 +387,7 @@ function updateStats(){
     const avg=(sum/graded.length).toFixed(2);
     document.getElementById("avgNum").textContent=avg;
     const lode=graded.filter(c=>data[c.id].grade==="30L").length;
-    document.getElementById("avgSub").textContent=`su ${graded.length} moduli con voto${lode>0?" · "+lode+" con lode 🏆":""}`;
+    document.getElementById("avgSub").textContent=`su ${graded.length} moduli con voto${lode>0?" · "+lode+" con lode ":""}`;
     banner.style.display="flex";
   }
 }
@@ -498,7 +497,7 @@ function buildCard(c){
           <textarea id="notes_${c.id}" rows="4" placeholder="Concetti chiave, dubbi, risorse utili…">${d.notes||""}</textarea>
         </div>
       </div>
-      <button class="save-btn" id="savebtn_${c.id}" onclick="saveCard('${c.id}')">💾 Salva le modifiche</button>
+      <button class="save-btn" id="savebtn_${c.id}" onclick="saveCard('${c.id}')"> Salva le modifiche</button>
     </div>
   </div>`;
 }
